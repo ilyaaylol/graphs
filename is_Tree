@@ -1,0 +1,27 @@
+from collections import deque
+def is_Tree(graph, start_node):
+    visited = set()
+    queue = deque([start_node])
+    parent = {start_node: None}
+
+    while queue:
+        vertex = queue.pop()
+        visited.add(vertex)
+        for neighbor in graph[vertex]:
+            if neighbor not in visited:
+                if neighbor not in parent:
+                    queue.append(neighbor)
+                    parent[neighbor] = vertex
+            else:
+                if parent[vertex] != neighbor:
+                    return False
+    return len(visited) == len(graph)
+graph = {
+    'A': ['B', 'D'],
+    'B': ['A', 'C'],
+    'C': ['B'],
+    'D': ['A', 'E', 'F'],
+    'E': ['D'],
+    'F': ['D']
+}
+print(is_Tree(graph, 'A'))
